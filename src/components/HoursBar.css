@@ -1,0 +1,9 @@
+.hours-bar {
+  background: var(--brown);
+  color: var(--cream);
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}

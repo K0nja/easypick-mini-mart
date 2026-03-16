@@ -1,0 +1,46 @@
+.toppings-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.toppings-section {
+  background: var(--white);
+  border: 2px solid var(--red);
+  border-radius: 4px;
+  padding: 1.2rem 1.4rem;
+  text-align: center;
+}
+
+.toppings-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+  border-bottom: 2px solid var(--red);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.toppings-list {
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+.toppings-extras {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: var(--text-light);
+  border-top: 1px solid var(--border);
+  padding-top: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.toppings-extras strong {
+  color: var(--red);
+}

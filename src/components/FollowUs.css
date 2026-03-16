@@ -1,0 +1,68 @@
+.follow-us {
+  background: var(--white);
+  padding: 5rem 1rem;
+  scroll-margin-top: 70px;
+}
+
+.follow-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.social-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 3rem;
+}
+
+.social-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.8rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.social-card:hover {
+  border-color: var(--social-color, var(--red));
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.social-card-icon {
+  display: flex;
+  align-items: center;
+}
+
+.social-card-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.social-card-handle {
+  font-size: 0.78rem;
+  color: var(--text-light);
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: var(--text-light);
+  border-top: 2px solid var(--border);
+  padding-top: 2rem;
+}
+
+.contact-info a {
+  color: var(--red);
+  font-weight: 600;
+  font-size: 1.1rem;
+}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
-import { getMenu, saveMenu, resetMenu } from '../data/menuData'
+import { getMenu, saveMenu, resetMenu, DEFAULT_MENU } from '../data/menuData'
 import './Admin.css'
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD
@@ -294,10 +294,16 @@ export default function Admin() {
   useEffect(() => {
     if (authed) {
       setLoading(true)
-      getMenu().then((data) => {
-        setMenu(data)
-        setLoading(false)
-      })
+      getMenu()
+        .then((data) => {
+          setMenu(data)
+        })
+        .catch(() => {
+          setMenu(DEFAULT_MENU)
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     }
   }, [authed])
 

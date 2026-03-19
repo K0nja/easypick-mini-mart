@@ -65,7 +65,8 @@ export async function getMenu() {
   try {
     const snapshot = await get(ref(db, 'menu'))
     if (snapshot.exists()) {
-      return snapshot.val()
+      const val = snapshot.val()
+      return typeof val === 'string' ? JSON.parse(val) : val
     }
     return DEFAULT_MENU
   } catch (err) {
@@ -75,10 +76,10 @@ export async function getMenu() {
 }
 
 export async function saveMenu(menu) {
-  await set(ref(db, 'menu'), menu)
+  await set(ref(db, 'menu'), JSON.stringify(menu))
 }
 
 export async function resetMenu() {
-  await set(ref(db, 'menu'), DEFAULT_MENU)
+  await set(ref(db, 'menu'), JSON.stringify(DEFAULT_MENU))
   return DEFAULT_MENU
 }

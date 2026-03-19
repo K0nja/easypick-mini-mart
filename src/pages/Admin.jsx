@@ -287,10 +287,18 @@ export default function Admin() {
   const [error, setError] = useState('')
   const [menu, setMenu] = useState(null)
   const [saved, setSaved] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('pizzas')
 
   useEffect(() => {
-    if (authed) setMenu(getMenu())
+    if (authed) {
+      setLoading(true)
+      getMenu().then((data) => {
+        setMenu(data)
+        setLoading(false)
+      })
+    }
   }, [authed])
 
   function login(e) {
@@ -310,15 +318,17 @@ export default function Admin() {
     setMenu(null)
   }
 
-  function handleSave() {
-    saveMenu(menu)
+  async function handleSave() {
+    setSaving(true)
+    await saveMenu(menu)
+    setSaving(false)
     setSaved(true)
     setTimeout(() => setSaved(false), 2500)
   }
 
-  function handleReset() {
+  async function handleReset() {
     if (window.confirm('Reset all menu items to defaults? This cannot be undone.')) {
-      const defaultMenu = resetMenu()
+      const defaultMenu = await resetMenu()
       setMenu(defaultMenu)
     }
   }
@@ -358,6 +368,7 @@ export default function Admin() {
     )
   }
 
+  if (loading) return <div className="admin-loading">Loading menu...</div>
   if (!menu) return null
 
   return (
@@ -369,8 +380,8 @@ export default function Admin() {
           <h2>Menu Editor</h2>
           <div className="admin-actions">
             <button className="btn-reset" onClick={handleReset}>Reset to Defaults</button>
-            <button className="btn-save" onClick={handleSave}>
-              {saved ? '✓ Saved!' : 'Save Changes'}
+            <button className="btn-save" onClick={handleSave} disabled={saving}>
+              {saving ? 'Saving...' : saved ? '✓ Saved!' : 'Save Changes'}
             </button>
             <button className="btn-logout" onClick={logout}>Log Out</button>
           </div>
@@ -413,8 +424,8 @@ export default function Admin() {
         </div>
 
         <div className="admin-bottom-actions">
-          <button className="btn-save btn-save--lg" onClick={handleSave}>
-            {saved ? '✓ Saved!' : 'Save Changes'}
+          <button className="btn-save btn-save--lg" onClick={handleSave} disabled={saving}>
+            {saving ? 'Saving...' : saved ? '✓ Saved!' : 'Save Changes'}
           </button>
         </div>
       </main>

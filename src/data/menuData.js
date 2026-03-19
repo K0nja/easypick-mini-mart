@@ -1,3 +1,6 @@
+import { ref, get, set } from 'firebase/database'
+import { db } from '../firebase'
+
 export const DEFAULT_MENU = {
   pizzas: {
     title: "14 IN PIZZA (8 SLICES)",
@@ -56,25 +59,26 @@ export const DEFAULT_MENU = {
   menuNote: "All Prices Are Before Tax and Subject to Change",
   orderCutoff: "No Orders Will Be Taken After 7:30pm Mon-Sat | 5:30pm on Sun",
   gallery: [],
-};
+}
 
-export function getMenu() {
-  const stored = localStorage.getItem("easypick_menu");
-  if (stored) {
-    try {
-      return JSON.parse(stored);
-    } catch {
-      return DEFAULT_MENU;
+export async function getMenu() {
+  try {
+    const snapshot = await get(ref(db, 'menu'))
+    if (snapshot.exists()) {
+      return snapshot.val()
     }
+    return DEFAULT_MENU
+  } catch (err) {
+    console.error('Failed to load menu from Firebase:', err)
+    return DEFAULT_MENU
   }
-  return DEFAULT_MENU;
 }
 
-export function saveMenu(menu) {
-  localStorage.setItem("easypick_menu", JSON.stringify(menu));
+export async function saveMenu(menu) {
+  await set(ref(db, 'menu'), menu)
 }
 
-export function resetMenu() {
-  localStorage.removeItem("easypick_menu");
-  return DEFAULT_MENU;
+export async function resetMenu() {
+  await set(ref(db, 'menu'), DEFAULT_MENU)
+  return DEFAULT_MENU
 }

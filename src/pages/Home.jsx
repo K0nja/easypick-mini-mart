@@ -14,7 +14,7 @@ export default function Home() {
   const [menu, setMenu] = useState(null)
 
   useEffect(() => {
-    setMenu(getMenu())
+    getMenu().then(setMenu)
   }, [])
 
   if (!menu) return null

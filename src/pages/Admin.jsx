@@ -294,16 +294,13 @@ export default function Admin() {
   useEffect(() => {
     if (authed) {
       setLoading(true)
-      getMenu()
-        .then((data) => {
-          setMenu(data)
-        })
-        .catch(() => {
-          setMenu(DEFAULT_MENU)
-        })
-        .finally(() => {
-          setLoading(false)
-        })
+      const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('timeout')), 6000)
+      )
+      Promise.race([getMenu(), timeout])
+        .then((data) => setMenu(data))
+        .catch(() => setMenu(DEFAULT_MENU))
+        .finally(() => setLoading(false))
     }
   }, [authed])
 
@@ -393,7 +390,7 @@ export default function Admin() {
           </div>
         </div>
 
-        <p className="admin-hint">Changes are saved to this browser and reflected on the public menu page.</p>
+        <p className="admin-hint">Changes are saved to the database and reflected for all visitors.</p>
 
         <div className="admin-tabs">
           {TABS.map((tab) => (

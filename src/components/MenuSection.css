@@ -6,9 +6,6 @@
   break-inside: avoid;
 }
 
-.menu-section--ala-carte {
-  background: var(--cream);
-}
 
 .menu-section-title {
   font-size: 1rem;
